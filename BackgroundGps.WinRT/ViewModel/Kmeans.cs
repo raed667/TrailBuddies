@@ -1,4 +1,4 @@
-﻿using BackgroundGps.WinRT.Models;
+﻿using BackgroundGps.WinRT.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

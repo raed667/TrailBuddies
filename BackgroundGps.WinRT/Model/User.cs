@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BackgroundGps.WinRT.Models
+namespace BackgroundGps.WinRT.Model
 {
     public class User
     {
