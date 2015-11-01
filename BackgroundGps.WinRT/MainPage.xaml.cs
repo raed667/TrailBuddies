@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Parse;
+using BackgroundGps.WinRT.Model;
 
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
@@ -31,14 +32,15 @@ namespace BackgroundGps.WinRT
         private BackgroundTaskRegistration deviceUseTask;
         private DateTime startTime, endTime;
         private TimeSpan duration;
+        private string username;
 
-        private List<string> coordonates = new List<string>();
-
-
+        private List<string> coordonates;
 
         public MainPage()
         {
             this.InitializeComponent();
+
+            coordonates = new List<string>();
 
             TrackLocationButton.Click += MainPage_Loaded;
 
@@ -49,23 +51,18 @@ namespace BackgroundGps.WinRT
 
             try
             {
-                ParseClient.Initialize("****", "****");
-
+                ParseClient.Initialize("tFQtC1M0IhpZCWBBRRmqXCCE3SdUHO76f1RSNDOD", "wX0h5aUBInXq1NzNZIVx5b04kdidb4iGHKPLKidf");
             }
             catch (Exception)
             {
-
                 MessageDialog warningDialog = new MessageDialog("We couldn't get Parse to work, please try to connect to a Wifi", "Parse BaaS");
                 warningDialog.ShowAsync();
             }
-
-
 
         }
 
         async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-
             var promise = await BackgroundExecutionManager.RequestAccessAsync();
 
             if (promise == BackgroundAccessStatus.Denied)
@@ -150,13 +147,7 @@ namespace BackgroundGps.WinRT
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            // TODO: Prepare page for display here.
-
-            // TODO: If your application contains multiple pages, ensure that you are
-            // handling the hardware Back button by registering for the
-            // Windows.Phone.UI.Input.HardwareButtons.BackPressed event.
-            // If you are using the NavigationHelper provided by some templates,
-            // this event is handled for you.
+            username = e.Parameter.ToString();
         }
 
         private void TrackLocationButton_Click(object sender, RoutedEventArgs e)
@@ -184,7 +175,6 @@ namespace BackgroundGps.WinRT
             StoptrackingButton.IsEnabled = false;
             deviceUseTask.Unregister(true);
 
-
             var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
             if (localSettings.Values.ContainsKey("endTime") == true)
@@ -199,7 +189,6 @@ namespace BackgroundGps.WinRT
                 duration = endTime - startTime;
 
                 System.Diagnostics.Debug.WriteLine("Duration " + duration.TotalMinutes);
-
             }
 
             /////
@@ -211,28 +200,19 @@ namespace BackgroundGps.WinRT
                 double dist = (double)tmp;
 
 
-                System.Diagnostics.Debug.WriteLine(" FINAL Dist : " + dist);
+                System.Diagnostics.Debug.WriteLine("FINAL Dist : " + dist);
 
                 /// PARSE
                 /// 
                 var trailObject = new ParseObject("Trail");
-                trailObject["length"] = dist;
+                trailObject["distance"] = dist;
                 trailObject["duration"] = duration.TotalMinutes;
+                trailObject["userId"] = username;
 
                 await trailObject.SaveAsync();
 
                 progressRing.IsActive = false;
-
-
             }
-
-
         }
-
-
-
-
-
     }
-
 }

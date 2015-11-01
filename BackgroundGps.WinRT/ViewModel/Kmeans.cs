@@ -187,6 +187,55 @@ namespace BackgroundGps.WinRT.ViewModel
             return indexOfMin;
         }
 
+        // ============================================================================
+
+        // misc display helpers for demo
+
+        static void ShowData(double[][] data, int decimals, bool indices, bool newLine)
+        {
+            for (int i = 0; i < data.Length; ++i)
+            {
+                if (indices)  System.Diagnostics.Debug.WriteLine(i.ToString().PadLeft(3) + " ");
+                for (int j = 0; j < data[i].Length; ++j)
+                {
+                    if (data[i][j] >= 0.0)  System.Diagnostics.Debug.WriteLine(" ");
+                     System.Diagnostics.Debug.WriteLine(data[i][j].ToString("F" + decimals) + " ");
+                }
+                 System.Diagnostics.Debug.WriteLine("");
+            }
+            if (newLine)  System.Diagnostics.Debug.WriteLine("");
+        } // ShowData
+
+        static void ShowVector(int[] vector, bool newLine)
+        {
+            for (int i = 0; i < vector.Length; ++i)
+                 System.Diagnostics.Debug.WriteLine(vector[i] + " ");
+            if (newLine)  System.Diagnostics.Debug.WriteLine("\n");
+        }
+
+        static void ShowClustered(double[][] data, int[] clustering, int numClusters, int decimals)
+        {
+            for (int k = 0; k < numClusters; ++k)
+            {
+                 System.Diagnostics.Debug.WriteLine("===================");
+                for (int i = 0; i < data.Length; ++i)
+                {
+                    int clusterID = clustering[i];
+                    if (clusterID != k) continue;
+                     System.Diagnostics.Debug.WriteLine(i.ToString().PadLeft(3) + " ");
+                    for (int j = 0; j < data[i].Length; ++j)
+                    {
+                        if (data[i][j] >= 0.0)  System.Diagnostics.Debug.WriteLine(" ");
+                         System.Diagnostics.Debug.WriteLine(data[i][j].ToString("F" + decimals) + " ");
+                    }
+                     System.Diagnostics.Debug.WriteLine("");
+                }
+                 System.Diagnostics.Debug.WriteLine("===================");
+            } // k
+        }
+
+        // ============================================================================
+
         public static List<int> GetTrailsIds(int numClusters)
         {
             clustering = Cluster(rawData, numClusters);

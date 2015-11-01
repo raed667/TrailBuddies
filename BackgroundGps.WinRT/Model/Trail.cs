@@ -8,7 +8,7 @@ namespace BackgroundGps.WinRT.Model
 {
     public class Trail
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public int Duration { get; set; }
         public float Distance { get; set; }
         public float Altitude { get; set; }

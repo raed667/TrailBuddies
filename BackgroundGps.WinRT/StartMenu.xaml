@@ -1,0 +1,15 @@
+﻿<Page
+    x:Class="BackgroundGps.WinRT.StartMenu"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BackgroundGps.WinRT"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Button x:Name="btnStart" Content="Start" HorizontalAlignment="Left" Margin="144,119,0,0" VerticalAlignment="Top" Click="btnStart_Click"/>
+        <Button x:Name="btnFind" Content="Find People" HorizontalAlignment="Left" Margin="144,262,0,0" VerticalAlignment="Top" Click="btnFind_Click"/>
+    </Grid>
+</Page>
