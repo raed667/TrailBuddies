@@ -171,7 +171,7 @@ namespace BackgroundGps.Engine
 
             lastPosition = pos;
 
-            System.Diagnostics.Debug.WriteLine("NEW DIST :" + dist);
+            System.Diagnostics.Debug.WriteLine("NEW DIST  :" + dist);
 
 
             var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
